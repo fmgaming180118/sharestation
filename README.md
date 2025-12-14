@@ -155,15 +155,15 @@ Aplikasi akan berjalan di `http://127.0.0.1:8000`
 
 Setelah menjalankan seeder, gunakan kredensial berikut:
 
-| Role | Email | Password |
-|------|-------|----------|
-| **Admin** | admin@sharestation.com | password123 |
-| **Warga (Owner)** | warga@sharestation.com | warga123 |
-| **Driver** | driver@sharestation.com | driver123 |
+| Role | Email | Password | Description |
+|------|-------|----------|-------------|
+| **Admin** | admin@sharestation.com | password123 | Full system access |
+| **Driver** | driver@sharestation.com | password123 | Default driver account |
+| **Warga (Owner)** | warga@sharestation.com | password123 | Default owner account |
 
-**Testing Accounts:**
-- Driver: driver@test.com / password
-- Owner: owner@test.com / password
+**Additional Test Accounts:**
+- **Driver:** driver@test.com / password (Irwansyah)
+- **Owner:** owner@test.com / password (Ismail bin mail)
 
 ---
 
