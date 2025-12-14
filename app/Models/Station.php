@@ -21,6 +21,7 @@ class Station extends Model
         'is_open',
         'amenities',
         'image',
+        'phone',
         'is_active',
     ];
 

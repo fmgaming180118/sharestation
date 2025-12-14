@@ -149,6 +149,32 @@
                                     </select>
                                 </div>
 
+                                <!-- Power Output -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Power Output (kW)
+                                    </label>
+                                    <input type="number" name="power_kw" min="1" value="{{ $station->ports->first()->power_kw ?? '' }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="e.g., 150">
+                                    <p class="mt-1 text-xs text-gray-500">Will update all ports with this power</p>
+                                </div>
+
+                                <!-- Price per kWh -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Price per kWh (IDR)
+                                    </label>
+                                    <input type="number" name="price_per_kwh" min="0" step="0.01" value="{{ $station->ports->first()->price_per_kwh ?? '' }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="e.g., 1500">
+                                    <p class="mt-1 text-xs text-gray-500">Will update all ports with this price</p>
+                                </div>
+
+                                <!-- Contact Phone -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Contact Phone
+                                    </label>
+                                    <input type="tel" name="phone" value="{{ $station->phone }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="e.g., 081234567890">
+                                </div>
+
                                 <!-- Status -->
                                 <div class="md:col-span-2">
                                     <label class="flex items-center cursor-pointer">

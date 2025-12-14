@@ -85,6 +85,7 @@ class AdminController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'user_id' => 'required|exists:users,id',
+            'phone' => 'nullable|string|max:20',
             'num_ports' => 'required|integer|min:1|max:10',
             'power_kw' => 'required|integer|min:1',
             'price_per_kwh' => 'required|numeric|min:0',
@@ -97,6 +98,7 @@ class AdminController extends Controller
             'latitude' => $validated['latitude'],
             'longitude' => $validated['longitude'],
             'user_id' => $validated['user_id'],
+            'phone' => $validated['phone'] ?? null,
             'is_active' => $request->has('is_active'), // Handle checkbox
         ]);
 
@@ -122,7 +124,7 @@ class AdminController extends Controller
      */
     public function editStation($id): View
     {
-        $station = Station::with('host')->findOrFail($id);
+        $station = Station::with(['host', 'ports'])->findOrFail($id);
         $owners = User::where('role', 'warga')->get();
         return view('admin.edit-station', compact('station', 'owners'));
     }
@@ -140,12 +142,30 @@ class AdminController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'user_id' => 'required|exists:users,id',
-            'is_active' => 'boolean',
+            'phone' => 'nullable|string|max:20',
+            'power_kw' => 'nullable|integer|min:1',
+            'price_per_kwh' => 'nullable|numeric|min:0',
         ]);
 
-        $validated['is_active'] = $request->has('is_active');
+        // Update station
+        $station->update([
+            'name' => $validated['name'],
+            'address' => $validated['address'],
+            'latitude' => $validated['latitude'],
+            'longitude' => $validated['longitude'],
+            'user_id' => $validated['user_id'],
+            'phone' => $validated['phone'] ?? null,
+            'is_active' => $request->has('is_active'),
+        ]);
 
-        $station->update($validated);
+        // Update all ports if power_kw and price_per_kwh are provided
+        if (isset($validated['power_kw']) && isset($validated['price_per_kwh'])) {
+            $station->ports()->update([
+                'type' => $validated['power_kw'] >= 100 ? 'Fast Charging' : 'Regular Charging',
+                'power_kw' => $validated['power_kw'],
+                'price_per_kwh' => $validated['price_per_kwh'],
+            ]);
+        }
 
         return redirect()->route('admin.add-station')
             ->with('success', 'Station berhasil diupdate');
