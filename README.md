@@ -306,7 +306,7 @@ This project is licensed under the MIT License.
 
 ## 📞 Contact & Support
 
-- **Email:** support@sharestation.com
+<!-- - **Email:** support@sharestation.com -->
 - **GitHub:** [ShareStation Repository](https://github.com/fmgaming180118/sharestation)
 
 ---
