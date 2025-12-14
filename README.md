@@ -1,59 +1,320 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🔌 ShareStation - Platform Peer-to-Peer EV Charging
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<div align="center">
+  
+  [![Laravel](https://img.shields.io/badge/Laravel-12.x-red.svg)](https://laravel.com)
+  [![PHP](https://img.shields.io/badge/PHP-8.5-blue.svg)](https://php.net)
+  [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.x-38B2AC.svg)](https://tailwindcss.com)
+  [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+</div>
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📋 Deskripsi Project
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**ShareStation** adalah platform peer-to-peer emergency charging per-menit pertama di Indonesia yang dirancang untuk mengatasi keterbatasan infrastruktur SPKLU (Stasiun Pengisian Kendaraan Listrik Umum). Platform ini memungkinkan pemilik EV (Electric Vehicle) untuk berbagi akses charging tanpa investasi besar di infrastruktur, dengan sistem berbasis daya kendaraan listrik dalam hitungan menit.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 🎯 Tujuan Utama
+- Mengatasi anxiety range EV driver dengan menyediakan solusi charging darurat
+- Menciptakan peluang penghasilan pasif bagi masyarakat (warga) yang memiliki akses listrik
+- Menghubungkan pemilik charging station dengan pengguna EV secara real-time
+- Menyediakan sistem booking, payment tracking, dan review yang transparan
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 🎥 Video Demo
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+[![ShareStation Demo](https://img.youtube.com/vi/YOUR_VIDEO_ID/maxresdefault.jpg)](https://youtu.be/YOUR_VIDEO_ID)
 
-## Laravel Sponsors
+**Link YouTube:** [https://youtu.be/YOUR_VIDEO_ID](https://youtu.be/YOUR_VIDEO_ID)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+> 📝 **Note:** Ganti `YOUR_VIDEO_ID` dengan ID video YouTube Anda
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## ✨ Fitur Utama
 
-## Contributing
+### 👨‍💼 Admin Dashboard
+- 📊 Monitoring total users dan active stations
+- 👥 User management (CRUD operations)
+- 🏢 Station management dengan detail ports
+- 📧 Contact message handling
+- 📈 Real-time statistics
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 🚗 Driver Dashboard
+- 🗺️ Interactive map dengan OpenStreetMap & Leaflet.js
+- 📍 Geolocation untuk menemukan stasiun terdekat
+- 🔍 Filter stasiun berdasarkan jarak dan ketersediaan
+- 📱 Booking charging ports secara real-time
+- 🧾 Transaction history dan invoice
+- ⭐ Review & rating system
 
-## Code of Conduct
+### 🏠 Warga (Owner) Dashboard
+- 📊 Income tracking dari charging station
+- 🔌 Port management (status, pricing, power output)
+- 💰 Transaction monitoring
+- 📈 Performance analytics
+- 👤 Profile management
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 🛠️ Tech Stack
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Backend
+- **Framework:** Laravel 12.x
+- **Language:** PHP 8.5
+- **Database:** MySQL 8.0
+- **Authentication:** Laravel Sanctum + Session
 
-## License
+### Frontend
+- **CSS Framework:** Tailwind CSS 3.x
+- **JavaScript:** Vanilla JS + Alpine.js
+- **Icons:** Font Awesome 6.4
+- **Maps:** Leaflet.js 1.9.4 + OpenStreetMap
+- **Build Tool:** Vite 5.x
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Additional Libraries
+- **Chart.js** - Data visualization
+- **SweetAlert2** - Beautiful alerts
+- **Nominatim API** - Reverse geocoding
+
+---
+
+## 📦 Installation Guide
+
+### Prerequisites
+- PHP >= 8.2
+- Composer
+- Node.js & NPM
+- MySQL/MariaDB
+- Git
+
+### Step 1: Clone Repository
+```bash
+git clone https://github.com/fmgaming180118/sharestation.git
+cd sharestation
+```
+
+### Step 2: Install Dependencies
+```bash
+# Install PHP dependencies
+composer install
+
+# Install Node dependencies
+npm install
+```
+
+### Step 3: Environment Configuration
+```bash
+# Copy environment file
+cp .env.example .env
+
+# Generate application key
+php artisan key:generate
+```
+
+### Step 4: Database Configuration
+Edit `.env` file:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=sharestation
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### Step 5: Run Migrations & Seeders
+```bash
+# Create database first in MySQL
+mysql -u root -e "CREATE DATABASE sharestation"
+
+# Run migrations and seeders
+php artisan migrate:fresh --seed
+```
+
+### Step 6: Build Assets
+```bash
+# Development
+npm run dev
+
+# Production
+npm run build
+```
+
+### Step 7: Start Development Server
+```bash
+php artisan serve
+```
+
+Aplikasi akan berjalan di `http://127.0.0.1:8000`
+
+---
+
+## 👤 Default Login Credentials
+
+Setelah menjalankan seeder, gunakan kredensial berikut:
+
+| Role | Email | Password |
+|------|-------|----------|
+| **Admin** | admin@sharestation.com | password123 |
+| **Warga (Owner)** | warga@sharestation.com | warga123 |
+| **Driver** | driver@sharestation.com | driver123 |
+
+**Testing Accounts:**
+- Driver: driver@test.com / password
+- Owner: owner@test.com / password
+
+---
+
+## 🗂️ Database Structure
+
+### Users Table
+- Role-based access: `admin`, `warga`, `driver`
+- Authentication dengan Laravel Hash
+- Profile information (name, email, phone, address)
+
+### Stations Table
+- Owner/Host information
+- Geolocation (latitude, longitude)
+- Operational hours & amenities
+- Active status tracking
+
+### Ports Table
+- Station relationship
+- Connector type (Fast Charging, Regular Charging)
+- Power output (kW)
+- Price per kWh
+- Real-time status (available, busy, maintenance)
+
+### Transactions Table
+- Booking records
+- Duration tracking
+- Payment status
+- Confirmation codes
+
+### Reviews Table
+- Rating (1-5 stars)
+- Comments
+- User & station relationship
+
+---
+
+## 📁 Project Structure
+
+```
+sharestation/
+├── app/
+│   ├── Http/Controllers/      # All controllers
+│   ├── Models/                 # Eloquent models
+│   └── Enums/                  # Enum definitions
+├── database/
+│   ├── migrations/             # Database migrations
+│   └── seeders/                # Database seeders
+├── resources/
+│   ├── views/                  # Blade templates
+│   │   ├── admin/              # Admin views
+│   │   ├── driver/             # Driver views
+│   │   ├── owner/              # Owner views
+│   │   └── landingpage/        # Public pages
+│   ├── css/                    # Stylesheets
+│   └── js/                     # JavaScript files
+├── public/
+│   ├── storage/icons/          # App icons & images
+│   └── storage/images/         # User uploads
+├── routes/
+│   └── web.php                 # Web routes
+└── storage/
+    └── app/public/             # Public storage
+```
+
+---
+
+## 🚀 Deployment
+
+### Production Build
+```bash
+# Build frontend assets
+npm run build
+
+# Optimize Laravel
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+php artisan storage:link
+```
+
+### Server Requirements
+- PHP >= 8.2 with extensions: OpenSSL, PDO, Mbstring, Tokenizer, XML, Ctype, JSON, BCMath
+- MySQL >= 5.7 / MariaDB >= 10.3
+- Composer
+- Node.js & NPM
+
+---
+
+## 🐛 Known Issues & Roadmap
+
+### Current Features ✅
+- ✅ Multi-role authentication (Admin, Warga, Driver)
+- ✅ Interactive map dengan geolocation
+- ✅ Real-time station availability
+- ✅ Booking & transaction system
+- ✅ Review & rating
+- ✅ Dynamic data from database
+
+### Roadmap v2.0
+- [ ] Payment gateway integration (Midtrans/Xendit)
+- [ ] Push notification system
+- [ ] Mobile app (Flutter)
+- [ ] Real-time port availability dengan WebSocket
+- [ ] QR Code scanning untuk booking
+- [ ] Multi-language support
+- [ ] Advanced analytics dashboard
+
+---
+
+## 🤝 Contributing
+
+Kontribusi sangat diterima! Silakan fork repository ini dan buat pull request untuk perubahan yang Anda usulkan.
+
+### Development Workflow
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 👥 Team
+
+**HIMALESS Team** - Babak Semifinal EV Hackathon 2025
+
+---
+
+## 📞 Contact & Support
+
+- **Email:** support@sharestation.com
+- **GitHub:** [ShareStation Repository](https://github.com/YOUR_USERNAME/sharestation)
+
+---
+
+## 🙏 Acknowledgments
+
+- Laravel Framework Team
+- OpenStreetMap Contributors
+- Leaflet.js Community
+- Font Awesome & Tailwind CSS Team
+
+---
+
+<div align="center">
+  <p>Made with ❤️ by HIMALESS Team</p>
+  <p>© 2025 ShareStation. All rights reserved.</p>
+</div>
