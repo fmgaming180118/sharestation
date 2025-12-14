@@ -55,7 +55,10 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-2">
                                         Full Name <span class="text-red-500">*</span>
                                     </label>
-                                    <input type="text" name="name" required value="Ahmad Susanto" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <input type="text" name="name" required value="{{ old('name', $user->name) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    @error('name')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- Username -->
@@ -63,7 +66,10 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-2">
                                         Username <span class="text-red-500">*</span>
                                     </label>
-                                    <input type="text" name="username" required value="ahmad_s" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <input type="text" name="username" required value="{{ old('username', $user->username) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    @error('username')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- Email -->
@@ -71,7 +77,46 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-2">
                                         Email Address <span class="text-red-500">*</span>
                                     </label>
-                                    <input type="email" name="email" required value="ahmad@example.com" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <input type="email" name="email" required value="{{ old('email', $user->email) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    @error('email')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <!-- Phone -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Phone Number
+                                    </label>
+                                    <input type="text" name="phone" value="{{ old('phone', $user->phone) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                </div>
+
+                                <!-- Address -->
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Address
+                                    </label>
+                                    <textarea name="address" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">{{ old('address', $user->address) }}</textarea>
+                                </div>
+
+                                <!-- Role -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                                        Role <span class="text-red-500">*</span>
+                                    </label>
+                                    <select name="role" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                        <option value="warga" {{ old('role', $user->role) == 'warga' ? 'selected' : '' }}>Warga (Owner)</option>
+                                        <option value="driver" {{ old('role', $user->role) == 'driver' ? 'selected' : '' }}>Driver</option>
+                                        <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin</option>
+                                    </select>
+                                </div>
+
+                                <!-- Is Host Checkbox -->
+                                <div>
+                                    <label class="flex items-center mt-8">
+                                        <input type="checkbox" name="is_host" value="1" {{ old('is_host', $user->is_host) ? 'checked' : '' }} class="w-5 h-5 text-purple-600 border-gray-300 rounded focus:ring-purple-500">
+                                        <span class="ml-2 text-sm font-medium text-gray-700">Is Host/Owner</span>
+                                    </label>
                                 </div>
                             </div>
 
@@ -90,7 +135,10 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-2">
                                         New Password
                                     </label>
-                                    <input type="password" name="password" minlength="8" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Leave blank to keep current">
+                                    <input type="password" name="password" minlength="6" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Leave blank to keep current">
+                                    @error('password')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- Confirm New Password -->
@@ -98,12 +146,11 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-2">
                                         Confirm New Password
                                     </label>
-                                    <input type="password" name="password_confirmation" minlength="8" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Re-enter new password">
+                                    <input type="password" name="password_confirmation" minlength="6" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Re-enter new password">
                                 </div>
                             </div>
 
-                            <!-- Hidden Role Field -->
-                            <input type="hidden" name="role" value="warga">
+                            <hr class="my-6 border-gray-200">
 
                             <!-- Action Buttons -->
                             <div class="flex justify-end space-x-4 pt-6">
