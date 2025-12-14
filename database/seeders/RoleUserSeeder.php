@@ -19,7 +19,7 @@ class RoleUserSeeder extends Seeder
             'name' => 'Admin User',
             'username' => 'admin',
             'email' => 'admin@sharestation.com',
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('password'),
             'role' => 'admin',
             'is_host' => false,
         ]);
@@ -29,7 +29,7 @@ class RoleUserSeeder extends Seeder
             'name' => 'Driver User',
             'username' => 'driver',
             'email' => 'driver@sharestation.com',
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('password'),
             'role' => 'driver',
             'is_host' => false,
         ]);
@@ -39,7 +39,7 @@ class RoleUserSeeder extends Seeder
             'name' => 'Warga User',
             'username' => 'warga',
             'email' => 'warga@sharestation.com',
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('password'),
             'role' => 'warga',
             'is_host' => false,
         ]);

@@ -21,14 +21,14 @@ class AdminUserSeeder extends Seeder
                 'name' => 'Admin User',
                 'username' => 'admin',
                 'email' => 'admin@sharestation.com',
-                'password' => Hash::make('password123'),
+                'password' => Hash::make('password'),
                 'role' => 'admin',
                 'is_host' => false,
             ]);
             
             echo "Admin user created successfully!\n";
             echo "Email: admin@sharestation.com\n";
-            echo "Password: password123\n";
+            echo "Password: password\n";
         } else {
             echo "Admin user already exists!\n";
             echo "Email: admin@sharestation.com\n";
