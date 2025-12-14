@@ -142,7 +142,13 @@ npm run dev
 npm run build
 ```
 
-### Step 7: Start Development Server
+### Step 7: Create Storage Symlink
+```bash
+# PENTING: Buat symbolic link untuk storage (agar icon/gambar bisa diakses)
+php artisan storage:link
+```
+
+### Step 8: Start Development Server
 ```bash
 php artisan serve
 ```
