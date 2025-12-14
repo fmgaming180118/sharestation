@@ -62,17 +62,17 @@
                                     @else
                                         @foreach($users as $user)
                                         <tr class="hover:bg-gray-50 transition-colors">
-                                            <td class="px-4 py-4 text-sm text-gray-800">{{ $user['id'] }}</td>
-                                            <td class="px-4 py-4 text-sm text-gray-800 font-medium">{{ $user['name'] }}</td>
-                                            <td class="px-4 py-4 text-sm text-gray-600">{{ $user['username'] }}</td>
-                                            <td class="px-4 py-4 text-sm text-gray-600">{{ $user['email'] }}</td>
-                                            <td class="px-4 py-4 text-sm text-gray-600">{{ $user['created_at'] }}</td>
+                                            <td class="px-4 py-4 text-sm text-gray-800">{{ $user->id }}</td>
+                                            <td class="px-4 py-4 text-sm text-gray-800 font-medium">{{ $user->name }}</td>
+                                            <td class="px-4 py-4 text-sm text-gray-600">{{ $user->username ?? '-' }}</td>
+                                            <td class="px-4 py-4 text-sm text-gray-600">{{ $user->email }}</td>
+                                            <td class="px-4 py-4 text-sm text-gray-600">{{ $user->created_at->format('Y-m-d') }}</td>
                                             <td class="px-4 py-4 text-center">
                                                 <div class="flex items-center justify-center space-x-2">
-                                                    <a href="{{ route('admin.edit-user', $user['id']) }}" class="text-blue-600 hover:text-blue-800 transition-colors" title="Edit User">
+                                                    <a href="{{ route('admin.edit-user', $user->id) }}" class="text-blue-600 hover:text-blue-800 transition-colors" title="Edit User">
                                                         <i class="fas fa-edit text-lg"></i>
                                                     </a>
-                                                    <button onclick="confirmDeleteUser('{{ addslashes($user['name']) }}', {{ $user['id'] }})" class="text-red-600 hover:text-red-800 transition-colors" title="Delete User">
+                                                    <button onclick="confirmDeleteUser('{{ addslashes($user->name) }}', {{ $user->id }})" class="text-red-600 hover:text-red-800 transition-colors" title="Delete User">
                                                         <i class="fas fa-trash text-lg"></i>
                                                     </button>
                                                 </div>
@@ -82,6 +82,11 @@
                                     @endif
                                 </tbody>
                             </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="mt-6">
+                            {{ $users->links() }}
                         </div>
 
                         <!-- Add User Button -->

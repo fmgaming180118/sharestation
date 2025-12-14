@@ -25,6 +25,15 @@
         #map {
             height: 400px;
             border-radius: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Ensure Leaflet controls stay within map's z-index */
+        .leaflet-pane,
+        .leaflet-top,
+        .leaflet-bottom {
+            z-index: auto !important;
         }
     </style>
 </head>
@@ -129,7 +138,7 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-2">
                                         Number of Ports <span class="text-red-500">*</span>
                                     </label>
-                                    <input type="number" name="num_ports" required min="1" max="10" value="{{ old('num_ports', 3) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="e.g., 3">
+                                    <input type="number" name="num_ports" required min="1" max="10" value="{{ old('num_ports') }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="e.g., 3">
                                     <p class="mt-1 text-xs text-gray-500">Maximum 10 ports per station</p>
                                 </div>
 
@@ -138,7 +147,7 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-2">
                                         Power Output (kW) <span class="text-red-500">*</span>
                                     </label>
-                                    <input type="number" name="power_kw" required min="1" value="{{ old('power_kw', 50) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="e.g., 150">
+                                    <input type="number" name="power_kw" required min="1" value="{{ old('power_kw') }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="e.g., 150">
                                     <p class="mt-1 text-xs text-gray-500">≥ 100kW = Fast Charging, < 100kW = Regular</p>
                                 </div>
 
@@ -147,7 +156,7 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-2">
                                         Price per kWh (IDR) <span class="text-red-500">*</span>
                                     </label>
-                                    <input type="number" name="price_per_kwh" required min="0" step="0.01" value="{{ old('price_per_kwh', 1500) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="e.g., 1500">
+                                    <input type="number" name="price_per_kwh" required min="0" step="0.01" value="{{ old('price_per_kwh') }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="e.g., 1500">
                                     <p class="mt-1 text-xs text-gray-500">All ports will have the same price</p>
                                 </div>
 

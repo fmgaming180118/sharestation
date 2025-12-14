@@ -25,6 +25,15 @@
         #map {
             height: 400px;
             border-radius: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Ensure Leaflet controls stay within map's z-index */
+        .leaflet-pane,
+        .leaflet-top,
+        .leaflet-bottom {
+            z-index: auto !important;
         }
 
         /* Style for disabled input to make it more obvious */

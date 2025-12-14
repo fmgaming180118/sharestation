@@ -61,7 +61,7 @@ class AdminController extends Controller
      */
     public function addStation(): View
     {
-        $stations = Station::with('host:id,name')->latest()->get();
+        $stations = Station::with('host:id,name')->latest()->paginate(10);
         return view('admin.add-station', compact('stations'));
     }
 
@@ -170,16 +170,7 @@ class AdminController extends Controller
     {
         $users = User::where('role', 'warga')
             ->latest('created_at')
-            ->get()
-            ->map(function ($user) {
-                return [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'username' => $user->username ?? '-',
-                    'email' => $user->email,
-                    'created_at' => $user->created_at->format('Y-m-d'),
-                ];
-            });
+            ->paginate(10);
         
         return view('admin.user-management', compact('users'));
     }

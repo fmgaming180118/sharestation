@@ -74,7 +74,7 @@
                                     @else
                                         @foreach($stations as $index => $station)
                                         <tr class="hover:bg-gray-50 transition-colors">
-                                            <td class="px-4 py-4 text-sm text-gray-800">{{ $index + 1 }}. {{ $station->name }}</td>
+                                            <td class="px-4 py-4 text-sm text-gray-800">{{ $stations->firstItem() + $index }}. {{ $station->name }}</td>
                                             <td class="px-4 py-4 text-sm text-gray-600">{{ $station->operational_hours ?? '-' }}</td>
                                             <td class="px-4 py-4 text-sm text-gray-600">-</td>
                                             <td class="px-4 py-4 text-sm text-gray-600">{{ $station->ports()->max('power_kw') ?? '-' }} kW</td>
@@ -96,6 +96,11 @@
                                     @endif
                                 </tbody>
                             </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="mt-6">
+                            {{ $stations->links() }}
                         </div>
 
                         <!-- Add Location Button -->
