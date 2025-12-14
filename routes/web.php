@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
         Route::get('/add-station', [App\Http\Controllers\AdminController::class, 'addStation'])->name('admin.add-station');
         Route::get('/create-station', [App\Http\Controllers\AdminController::class, 'createStation'])->name('admin.create-station');
+        Route::post('/create-station', [App\Http\Controllers\AdminController::class, 'storeStation'])->name('admin.store-station');
         Route::get('/edit-station/{id}', [App\Http\Controllers\AdminController::class, 'editStation'])->name('admin.edit-station');
         Route::get('/user-management', [App\Http\Controllers\AdminController::class, 'userManagement'])->name('admin.user-management');
         Route::get('/create-user', [App\Http\Controllers\AdminController::class, 'createUser'])->name('admin.create-user');

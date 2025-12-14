@@ -73,6 +73,26 @@ class AdminController extends Controller
     }
 
     /**
+     * Store new station
+     */
+    public function storeStation(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'required|string',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'host_id' => 'required|exists:users,id',
+            'is_active' => 'boolean',
+        ]);
+
+        Station::create($validated);
+
+        return redirect()->route('admin.add-station')
+            ->with('success', 'Station berhasil ditambahkan');
+    }
+
+    /**
      * Display edit station form
      */
     public function editStation($id): View
