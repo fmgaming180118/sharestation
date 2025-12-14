@@ -26,7 +26,7 @@
 
 [![ShareStation Demo](https://img.youtube.com/vi/YOUR_VIDEO_ID/maxresdefault.jpg)](https://youtu.be/YOUR_VIDEO_ID)
 
-**Link YouTube:** [https://youtu.be/YOUR_VIDEO_ID](https://youtu.be/YOUR_VIDEO_ID)
+**Link YouTube:** []()
 
 > 📝 **Note:** Ganti `YOUR_VIDEO_ID` dengan ID video YouTube Anda
 
@@ -301,7 +301,7 @@ This project is licensed under the MIT License.
 ## 📞 Contact & Support
 
 - **Email:** support@sharestation.com
-- **GitHub:** [ShareStation Repository](https://github.com/YOUR_USERNAME/sharestation)
+- **GitHub:** [ShareStation Repository](https://github.com/fmgaming180118/sharestation)
 
 ---
 

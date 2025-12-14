@@ -12,14 +12,16 @@ class HostController extends Controller
 {
     public function index(): View
     {
-        $stations = Auth::user()->stations()->latest()->get();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $stations = $user->stations()->with('ports')->latest()->get();
 
-        return view('host.index', compact('stations'));
+        return view('owner.dashboard', compact('stations'));
     }
 
     public function create(): View
     {
-        return view('host.create');
+        return view('owner.create-station');
     }
 
     public function store(Request $request): RedirectResponse
@@ -27,7 +29,6 @@ class HostController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'address' => ['nullable', 'string', 'max:255'],
-            'price_per_hour' => ['required', 'numeric', 'min:0'],
             'latitude' => ['nullable', 'numeric'],
             'longitude' => ['nullable', 'numeric'],
             'google_maps_link' => ['nullable', 'string', 'max:1024'],
@@ -49,15 +50,17 @@ class HostController extends Controller
                 ->withErrors(['latitude' => 'Harap isi Latitude & Longitude atau sertakan Google Maps link dengan koordinat (@lat,lng).']);
         }
 
-        Station::createForUser(Auth::user(), [
+        Station::create([
+            'user_id' => Auth::id(),
             'name' => $validated['name'],
             'address' => $validated['address'] ?? null,
             'latitude' => $lat,
             'longitude' => $lng,
             'operational_hours' => '00:00-23:59',
+            'is_open' => true,
             'is_active' => true,
         ]);
 
-        return redirect('/host/dashboard')->with('success', 'Station berhasil dibuat');
+        return redirect()->route('owner.dashboard')->with('success', 'Station berhasil dibuat');
     }
 }
