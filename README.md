@@ -24,11 +24,9 @@
 
 ## 🎥 Video Demo
 
-[![ShareStation Demo](https://img.youtube.com/vi/YOUR_VIDEO_ID/maxresdefault.jpg)](https://youtu.be/YOUR_VIDEO_ID)
+[![ShareStation Demo](https://img.youtube.com/vi/jQ5gXjVdNiM/maxresdefault.jpg)](https://youtu.be/jQ5gXjVdNiM?si=1-jfKVqRFrLlHY9i)
 
-**Link YouTube:** []()
-
-> 📝 **Note:** Ganti `YOUR_VIDEO_ID` dengan ID video YouTube Anda
+**Link YouTube:** [https://youtu.be/jQ5gXjVdNiM?si=1-jfKVqRFrLlHY9i](https://youtu.be/jQ5gXjVdNiM?si=1-jfKVqRFrLlHY9i)
 
 ---
 
