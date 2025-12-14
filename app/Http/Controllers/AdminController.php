@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Port;
 use App\Models\Station;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -84,16 +85,36 @@ class AdminController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'user_id' => 'required|exists:users,id',
-            'is_active' => 'boolean',
+            'num_ports' => 'required|integer|min:1|max:10',
+            'power_kw' => 'required|integer|min:1',
+            'price_per_kwh' => 'required|numeric|min:0',
         ]);
 
-        // Handle checkbox - if not checked, set to false
-        $validated['is_active'] = $request->has('is_active');
+        // Create station
+        $station = Station::create([
+            'name' => $validated['name'],
+            'address' => $validated['address'],
+            'latitude' => $validated['latitude'],
+            'longitude' => $validated['longitude'],
+            'user_id' => $validated['user_id'],
+            'is_active' => $request->has('is_active'), // Handle checkbox
+        ]);
 
-        Station::create($validated);
+        // Create ports for this station
+        $numPorts = $validated['num_ports'];
+        for ($i = 1; $i <= $numPorts; $i++) {
+            Port::create([
+                'station_id' => $station->id,
+                'name' => "Port " . chr(64 + $i), // Port A, Port B, Port C, etc.
+                'type' => $validated['power_kw'] >= 100 ? 'Fast Charging' : 'Regular Charging',
+                'power_kw' => $validated['power_kw'],
+                'price_per_kwh' => $validated['price_per_kwh'],
+                'status' => 'available',
+            ]);
+        }
 
         return redirect()->route('admin.add-station')
-            ->with('success', 'Station berhasil ditambahkan');
+            ->with('success', "Station '{$station->name}' berhasil ditambahkan dengan {$numPorts} ports");
     }
 
     /**

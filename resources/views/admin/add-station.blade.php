@@ -29,6 +29,16 @@
         <!-- Page Content -->
         <main class="p-6 flex items-center justify-center min-h-[calc(100vh-80px)]">
             <div class="w-full max-w-5xl">
+                <!-- Success Message -->
+                @if(session('success'))
+                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-lg mb-6">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                            <p class="text-sm font-medium text-green-800">{{ session('success') }}</p>
+                        </div>
+                    </div>
+                @endif
+
                 <!-- Location Data Card -->
                 <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
                     <!-- Card Header (Purple Gradient) -->
