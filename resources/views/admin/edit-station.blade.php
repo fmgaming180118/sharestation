@@ -94,7 +94,7 @@
                                                 <i class="fas fa-lock"></i> Locked
                                             </span>
                                         </label>
-                                        <input type="text" id="latitude" name="latitude" value="-6.2088" disabled class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-200 cursor-not-allowed" title="Location cannot be changed">
+                                        <input type="text" value="{{ $station->latitude }}" disabled class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-200 cursor-not-allowed" title="Location cannot be changed">
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -103,7 +103,7 @@
                                                 <i class="fas fa-lock"></i> Locked
                                             </span>
                                         </label>
-                                        <input type="text" id="longitude" name="longitude" value="106.8456" disabled class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-200 cursor-not-allowed" title="Location cannot be changed">
+                                        <input type="text" value="{{ $station->longitude }}" disabled class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-200 cursor-not-allowed" title="Location cannot be changed">
                                     </div>
                                 </div>
                             </div>
@@ -122,66 +122,33 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-2">
                                         Station Name <span class="text-red-500">*</span>
                                     </label>
-                                    <input type="text" name="name" required value="1. XYZ" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <input type="text" name="name" required value="{{ $station->name }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                                 </div>
 
-                                <!-- Station Point (DISABLED - CANNOT BE EDITED) -->
+                                <!-- Owner/Host -->
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">
-                                        Station Point Code
-                                        <span class="text-orange-600 text-xs ml-2">
-                                            <i class="fas fa-lock"></i> Locked
+                                        Owner <span class="text-red-500">*</span>
+                                    </label>
+                                    <select name="host_id" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                        <option value="">-- Select Owner --</option>
+                                        @foreach($owners as $owner)
+                                            <option value="{{ $owner->id }}" {{ $station->host_id == $owner->id ? 'selected' : '' }}>
+                                                {{ $owner->name }} ({{ $owner->email }})
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <!-- Status -->
+                                <div class="md:col-span-2">
+                                    <label class="flex items-center cursor-pointer">
+                                        <input type="checkbox" name="is_active" value="1" {{ $station->is_active ? 'checked' : '' }} class="w-5 h-5 text-purple-600 border-gray-300 rounded focus:ring-purple-500">
+                                        <span class="ml-3 text-sm font-medium text-gray-700">
+                                            <i class="fas fa-toggle-on text-green-600 mr-2"></i>Active Station
                                         </span>
                                     </label>
-                                    <input type="text" name="station_point" value="TLS FBT" disabled class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-200 cursor-not-allowed" title="Station code cannot be changed">
-                                </div>
-
-                                <!-- Operational Hours Start -->
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">
-                                        Opening Time <span class="text-red-500">*</span>
-                                    </label>
-                                    <input type="time" name="opening_time" required value="09:00" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                                </div>
-
-                                <!-- Operational Hours End -->
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">
-                                        Closing Time <span class="text-red-500">*</span>
-                                    </label>
-                                    <input type="time" name="closing_time" required value="23:00" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                                </div>
-
-                                <!-- Price per kWh -->
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">
-                                        Price per kWh (IDR) <span class="text-red-500">*</span>
-                                    </label>
-                                    <input type="number" name="price_kwh" required value="1000" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                                </div>
-
-                                <!-- Power Output -->
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">
-                                        Power Output (kW) <span class="text-red-500">*</span>
-                                    </label>
-                                    <input type="number" name="power_output" required value="130" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                                </div>
-
-                                <!-- Number of Ports -->
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">
-                                        Number of Ports <span class="text-red-500">*</span>
-                                    </label>
-                                    <input type="number" name="ports" required min="1" value="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                                </div>
-
-                                <!-- Phone Number -->
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">
-                                        Contact Phone
-                                    </label>
-                                    <input type="tel" name="phone" value="123" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <p class="ml-8 mt-1 text-xs text-gray-500">Uncheck to temporarily disable this station</p>
                                 </div>
                             </div>
 
@@ -190,8 +157,12 @@
                                 <label class="block text-sm font-medium text-gray-700 mb-2">
                                     Full Address <span class="text-red-500">*</span>
                                 </label>
-                                <textarea name="address" required rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">Jl. Example Street No. 123, Jakarta</textarea>
+                                <textarea name="address" required rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">{{ $station->address }}</textarea>
                             </div>
+
+                            <!-- Hidden fields for locked coordinates -->
+                            <input type="hidden" name="latitude" value="{{ $station->latitude }}">
+                            <input type="hidden" name="longitude" value="{{ $station->longitude }}">
 
                             <!-- Action Buttons -->
                             <div class="flex justify-end space-x-4 pt-6">
@@ -225,7 +196,7 @@
             boxZoom: false,         // Disable box zoom
             keyboard: false,        // Disable keyboard navigation
             zoomControl: false      // Hide zoom controls
-        }).setView([-6.2088, 106.8456], 13);
+        }).setView([{{ $station->latitude }}, {{ $station->longitude }}], 13);
 
         // Add OpenStreetMap tiles
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -234,11 +205,11 @@
         }).addTo(map);
 
         // Add fixed marker at the station location (NOT DRAGGABLE)
-        const marker = L.marker([-6.2088, 106.8456], {
+        const marker = L.marker([{{ $station->latitude }}, {{ $station->longitude }}], {
             draggable: false  // Marker cannot be dragged
         }).addTo(map);
 
-        marker.bindPopup('<b>Station Location (Locked)</b><br>Location cannot be changed').openPopup();
+        marker.bindPopup('<b>{{ $station->name }}</b><br>Location cannot be changed').openPopup();
 
         // No click events - map is completely view-only
     </script>

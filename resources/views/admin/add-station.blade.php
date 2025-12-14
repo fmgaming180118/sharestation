@@ -116,19 +116,27 @@
                 const secondConfirm = confirm(`FINAL CONFIRMATION\n\nAre you absolutely sure you want to delete "${stationName}"?\n\nThis will permanently remove all data associated with this station.`);
                 
                 if (secondConfirm) {
-                    // If both confirmations are accepted, proceed with deletion
-                    // In future, this will make an AJAX call or form submission to delete the station
-                    alert(`Station "${stationName}" has been deleted successfully!`);
+                    // Create form and submit
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = `/admin/delete-station/${stationId}`;
                     
-                    // For now, just show a success message
-                    // When connected to backend, add code here to send delete request
-                    // Example:
-                    // fetch(`/admin/station/${stationId}`, { method: 'DELETE' })
-                    //   .then(response => response.json())
-                    //   .then(data => location.reload());
-                } else {
-                    // Second confirmation cancelled
-                    alert('Deletion cancelled.');
+                    // CSRF Token
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = '_token';
+                    csrfInput.value = '{{ csrf_token() }}';
+                    form.appendChild(csrfInput);
+                    
+                    // Method Spoofing for DELETE
+                    const methodInput = document.createElement('input');
+                    methodInput.type = 'hidden';
+                    methodInput.name = '_method';
+                    methodInput.value = 'DELETE';
+                    form.appendChild(methodInput);
+                    
+                    document.body.appendChild(form);
+                    form.submit();
                 }
             }
         }

@@ -112,18 +112,27 @@
                 const secondConfirm = confirm(`FINAL CONFIRMATION\n\nAre you absolutely sure you want to delete user "${userName}"?\n\nThis will permanently remove all data associated with this user.`);
                 
                 if (secondConfirm) {
-                    // If both confirmations are accepted, proceed with deletion
-                    alert(`User "${userName}" has been deleted successfully!`);
+                    // Create form and submit
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = `/admin/delete-user/${userId}`;
                     
-                    // For now, just show a success message
-                    // When connected to backend, add code here to send delete request
-                    // Example:
-                    // fetch(`/admin/user/${userId}`, { method: 'DELETE' })
-                    //   .then(response => response.json())
-                    //   .then(data => location.reload());
-                } else {
-                    // Second confirmation cancelled
-                    alert('Deletion cancelled.');
+                    // CSRF Token
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = '_token';
+                    csrfInput.value = '{{ csrf_token() }}';
+                    form.appendChild(csrfInput);
+                    
+                    // Method Spoofing for DELETE
+                    const methodInput = document.createElement('input');
+                    methodInput.type = 'hidden';
+                    methodInput.name = '_method';
+                    methodInput.value = 'DELETE';
+                    form.appendChild(methodInput);
+                    
+                    document.body.appendChild(form);
+                    form.submit();
                 }
             }
         }
