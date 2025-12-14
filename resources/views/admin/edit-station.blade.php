@@ -56,7 +56,7 @@
 
                     <!-- Card Body (Form) -->
                     <div class="p-8">
-                        <form action="#" method="POST" class="space-y-6">
+                        <form action="{{ route('admin.update-station', $station->id) }}" method="POST" class="space-y-6">
                             @csrf
                             @method('PUT')
                             

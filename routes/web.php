@@ -52,9 +52,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/create-station', [App\Http\Controllers\AdminController::class, 'createStation'])->name('admin.create-station');
         Route::post('/create-station', [App\Http\Controllers\AdminController::class, 'storeStation'])->name('admin.store-station');
         Route::get('/edit-station/{id}', [App\Http\Controllers\AdminController::class, 'editStation'])->name('admin.edit-station');
+        Route::put('/update-station/{id}', [App\Http\Controllers\AdminController::class, 'updateStation'])->name('admin.update-station');
+        Route::delete('/delete-station/{id}', [App\Http\Controllers\AdminController::class, 'deleteStation'])->name('admin.delete-station');
         Route::get('/user-management', [App\Http\Controllers\AdminController::class, 'userManagement'])->name('admin.user-management');
         Route::get('/create-user', [App\Http\Controllers\AdminController::class, 'createUser'])->name('admin.create-user');
+        Route::post('/create-user', [App\Http\Controllers\AdminController::class, 'storeUser'])->name('admin.store-user');
         Route::get('/edit-user/{id}', [App\Http\Controllers\AdminController::class, 'editUser'])->name('admin.edit-user');
+        Route::put('/update-user/{id}', [App\Http\Controllers\AdminController::class, 'updateUser'])->name('admin.update-user');
+        Route::delete('/delete-user/{id}', [App\Http\Controllers\AdminController::class, 'deleteUser'])->name('admin.delete-user');
     });
 
     // Driver routes - only accessible by driver role

@@ -39,7 +39,7 @@
 
                     <!-- Card Body (Form) -->
                     <div class="p-8">
-                        <form action="#" method="POST" class="space-y-6">
+                        <form action="{{ route('admin.store-user') }}" method="POST" class="space-y-6">
                             @csrf
                             
                             <!-- Info Alert -->

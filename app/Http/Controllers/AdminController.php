@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Station;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 class AdminController extends Controller
@@ -103,6 +104,42 @@ class AdminController extends Controller
     }
 
     /**
+     * Update station
+     */
+    public function updateStation(Request $request, $id)
+    {
+        $station = Station::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'required|string',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'host_id' => 'required|exists:users,id',
+            'is_active' => 'boolean',
+        ]);
+
+        $validated['is_active'] = $request->has('is_active');
+
+        $station->update($validated);
+
+        return redirect()->route('admin.add-station')
+            ->with('success', 'Station berhasil diupdate');
+    }
+
+    /**
+     * Delete station
+     */
+    public function deleteStation($id)
+    {
+        $station = Station::findOrFail($id);
+        $station->delete();
+
+        return redirect()->route('admin.add-station')
+            ->with('success', 'Station berhasil dihapus');
+    }
+
+    /**
      * Display user management page
      */
     public function userManagement(): View
@@ -132,11 +169,82 @@ class AdminController extends Controller
     }
 
     /**
+     * Store new user
+     */
+    public function storeUser(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:6',
+            'phone' => 'nullable|string',
+            'phone_number' => 'nullable|string',
+            'address' => 'nullable|string',
+            'role' => 'required|in:admin,warga,driver',
+            'is_host' => 'boolean',
+        ]);
+
+        $validated['password'] = Hash::make($validated['password']);
+        $validated['is_host'] = $request->has('is_host');
+
+        User::create($validated);
+
+        return redirect()->route('admin.user-management')
+            ->with('success', 'User berhasil ditambahkan');
+    }
+
+    /**
      * Display edit user form
      */
     public function editUser($id): View
     {
         $user = User::findOrFail($id);
         return view('admin.edit-user', compact('user'));
+    }
+
+    /**
+     * Update user
+     */
+    public function updateUser(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,username,'.$id,
+            'email' => 'required|email|unique:users,email,'.$id,
+            'password' => 'nullable|string|min:6',
+            'phone' => 'nullable|string',
+            'phone_number' => 'nullable|string',
+            'address' => 'nullable|string',
+            'role' => 'required|in:admin,warga,driver',
+            'is_host' => 'boolean',
+        ]);
+
+        if (!empty($validated['password'])) {
+            $validated['password'] = Hash::make($validated['password']);
+        } else {
+            unset($validated['password']);
+        }
+
+        $validated['is_host'] = $request->has('is_host');
+
+        $user->update($validated);
+
+        return redirect()->route('admin.user-management')
+            ->with('success', 'User berhasil diupdate');
+    }
+
+    /**
+     * Delete user
+     */
+    public function deleteUser($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->route('admin.user-management')
+            ->with('success', 'User berhasil dihapus');
     }
 }
