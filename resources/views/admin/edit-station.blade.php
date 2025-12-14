@@ -130,10 +130,10 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-2">
                                         Owner <span class="text-red-500">*</span>
                                     </label>
-                                    <select name="host_id" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                    <select name="user_id" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
                                         <option value="">-- Select Owner --</option>
                                         @foreach($owners as $owner)
-                                            <option value="{{ $owner->id }}" {{ $station->host_id == $owner->id ? 'selected' : '' }}>
+                                            <option value="{{ $owner->id }}" {{ $station->user_id == $owner->id ? 'selected' : '' }}>
                                                 {{ $owner->name }} ({{ $owner->email }})
                                             </option>
                                         @endforeach

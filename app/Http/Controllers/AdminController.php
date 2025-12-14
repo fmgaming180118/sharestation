@@ -83,9 +83,12 @@ class AdminController extends Controller
             'address' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'host_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id',
             'is_active' => 'boolean',
         ]);
+
+        // Handle checkbox - if not checked, set to false
+        $validated['is_active'] = $request->has('is_active');
 
         Station::create($validated);
 
@@ -115,7 +118,7 @@ class AdminController extends Controller
             'address' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'host_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id',
             'is_active' => 'boolean',
         ]);
 
