@@ -9,11 +9,20 @@ class StationController extends Controller
 {
     public function index(): View
     {
-        $stations = Station::query()
+        $query = Station::query()
             ->with(['host:id,name', 'ports'])
             ->select('id', 'user_id', 'name', 'address', 'latitude', 'longitude', 'operational_hours', 'is_active')
-            ->where('is_active', true)
-            ->get();
+            ->where('is_active', true);
+
+        // Handle search query
+        if ($search = request('search')) {
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('address', 'like', "%{$search}%");
+            });
+        }
+
+        $stations = $query->get();
 
         return view('stations.index', compact('stations'));
     }

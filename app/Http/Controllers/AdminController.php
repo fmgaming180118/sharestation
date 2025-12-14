@@ -61,7 +61,17 @@ class AdminController extends Controller
      */
     public function addStation(): View
     {
-        $stations = Station::with('host:id,name')->latest()->paginate(10);
+        $query = Station::with('host:id,name')->latest();
+
+        // Handle search
+        if ($search = request('search')) {
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('address', 'like', "%{$search}%");
+            });
+        }
+
+        $stations = $query->paginate(10);
         return view('admin.add-station', compact('stations'));
     }
 
@@ -188,9 +198,18 @@ class AdminController extends Controller
      */
     public function userManagement(): View
     {
-        $users = User::where('role', 'warga')
-            ->latest('created_at')
-            ->paginate(10);
+        $query = User::where('role', 'warga')->latest('created_at');
+
+        // Handle search
+        if ($search = request('search')) {
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('username', 'like', "%{$search}%");
+            });
+        }
+
+        $users = $query->paginate(10);
         
         return view('admin.user-management', compact('users'));
     }
