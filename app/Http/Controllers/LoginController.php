@@ -35,6 +35,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
             
+            /** @var \App\Models\User $user */
             $user = Auth::user();
             
             // Generate Sanctum API token
@@ -101,7 +102,7 @@ class LoginController extends Controller
     /**
      * Show complete profile form for Google users
      */
-    public function showCompleteProfile(): View
+    public function showCompleteProfile(): View|RedirectResponse
     {
         // Check if we have Google user data in session
         if (!session()->has('google_user_id')) {
@@ -136,6 +137,7 @@ class LoginController extends Controller
             ]);
         }
 
+        /** @var \App\Models\User $user */
         $user = User::find($userId);
         if (!$user) {
             return redirect()->route('login')->withErrors([

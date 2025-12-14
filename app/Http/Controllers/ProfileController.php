@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -25,14 +26,17 @@ class ProfileController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users,email,' . Auth::id()],
+            'phone' => ['nullable', 'string', 'max:20'],
+            'address' => ['nullable', 'string', 'max:500'],
             'avatar' => ['nullable', 'image', 'max:2048'],
         ]);
 
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         if ($request->hasFile('avatar')) {
             if ($user->avatar && !str_starts_with($user->avatar, 'https://')) {
-                \Storage::disk('public')->delete($user->avatar);
+                Storage::disk('public')->delete($user->avatar);
             }
             $validated['avatar'] = $request->file('avatar')->store('avatars', 'public');
         }
@@ -40,6 +44,8 @@ class ProfileController extends Controller
         $user->update([
             'name' => $validated['name'],
             'email' => $validated['email'],
+            'phone' => $validated['phone'] ?? $user->phone,
+            'address' => $validated['address'] ?? $user->address,
             'avatar' => $validated['avatar'] ?? $user->avatar,
         ]);
 

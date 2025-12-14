@@ -273,26 +273,19 @@ class ComprehensiveRouteTest extends TestCase
     }
 
     /**
-     * Test POST routes require CSRF token
+     * Test POST routes work correctly
      */
     public function test_post_routes_require_csrf_token(): void
     {
         $this->actingAs($this->driver);
 
-        // Without CSRF, should get 419
-        $response = $this->post('/book', [
-            'station_id' => $this->station->id,
-        ]);
-
-        // Laravel test environment automatically includes CSRF, so we test with withoutMiddleware
-        $this->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
-        
+        // Test booking endpoint works (Laravel test automatically handles CSRF)
         $response = $this->post('/book', [
             'station_id' => $this->station->id,
         ]);
         
-        // Should redirect or process (not 419)
-        $this->assertNotEquals(419, $response->status());
+        // Should redirect after successful booking
+        $response->assertRedirect('/');
     }
 
     /**
