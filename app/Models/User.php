@@ -9,6 +9,24 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @mixin \Illuminate\Database\Eloquent\Builder
+ * @method static \Illuminate\Database\Eloquent\Builder where($column, $operator = null, $value = null, $boolean = 'and')
+ * @method static \App\Models\User create(array $attributes = [])
+ * @method \App\Models\User forceFill(array $attributes)
+ * @method bool save(array $options = [])
+ * @method int update(array $attributes = [], array $options = [])
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string|null $password
+ * @property string|null $google_id
+ * @property string|null $avatar
+ * @property string|null $role
+ * @property bool $is_host
+ * @property string|null $phone
+ * @property string|null $address
+ */
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */

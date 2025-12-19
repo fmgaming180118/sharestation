@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Station;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class DriverController extends Controller
@@ -12,16 +13,20 @@ class DriverController extends Controller
     /**
      * Display driver dashboard with nearby stations
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $user = auth()->user();
+        $user = Auth::user();
+        
+        // Get user's current location from request (latitude & longitude)
+        $userLat = $request->input('lat');
+        $userLon = $request->input('lon');
         
         // Get all active stations with their ports
         $stations = Station::with(['ports'])
             ->where('is_active', true)
             ->where('is_open', true)
             ->get()
-            ->map(function ($station) {
+            ->map(function ($station) use ($userLat, $userLon) {
                 // Calculate available ports
                 $availablePorts = $station->ports()->where('status', 'available')->count();
                 $totalPorts = $station->ports()->count();
@@ -32,6 +37,12 @@ class DriverController extends Controller
                     $statusColor = 'red';
                 } elseif ($availablePorts <= $totalPorts / 3) {
                     $statusColor = 'yellow';
+                }
+                
+                // Calculate distance if user location is provided
+                $distance = null;
+                if ($userLat && $userLon) {
+                    $distance = $station->distanceFrom((float)$userLat, (float)$userLon);
                 }
                 
                 return [
@@ -46,7 +57,12 @@ class DriverController extends Controller
                     'total_ports' => $totalPorts,
                     'status_color' => $statusColor,
                     'average_rating' => round($station->averageRating(), 1),
+                    'distance' => $distance,
                 ];
+            })
+            // Sort by distance (nearest first) if location is available
+            ->when($userLat && $userLon, function ($collection) {
+                return $collection->sortBy('distance')->values();
             });
         
         // Count total active stations
@@ -55,8 +71,11 @@ class DriverController extends Controller
         // Calculate total available ports across all stations
         $totalAvailablePorts = $stations->sum('available_ports');
         
-        // Find nearest station (for now, just use the first one as placeholder)
-        $nearestDistance = $stations->isNotEmpty() ? '1.5 KM' : '-';
+        // Find nearest station distance
+        $nearestDistance = '-';
+        if ($stations->isNotEmpty() && isset($stations->first()['distance'])) {
+            $nearestDistance = number_format($stations->first()['distance'], 1) . ' KM';
+        }
         
         // Count pending reservations for current user
         $pendingReservations = Transaction::where('user_id', $user->id)
@@ -71,7 +90,7 @@ class DriverController extends Controller
      */
     public function reservations(): View
     {
-        $user = auth()->user();
+        $user = Auth::user();
         
         // Get the most recent pending or active transaction
         $reservation = Transaction::with(['station', 'port'])
@@ -88,7 +107,7 @@ class DriverController extends Controller
      */
     public function invoice(): View
     {
-        $user = auth()->user();
+        $user = Auth::user();
         
         // Get the most recent transaction or specific transaction
         $transaction = Transaction::with(['station', 'port'])
@@ -121,7 +140,7 @@ class DriverController extends Controller
      */
     public function profile(): View
     {
-        $user = auth()->user();
+        $user = Auth::user();
         
         // Get transactions (new) instead of bookings (old)
         $transactions = $user->transactions()
@@ -140,7 +159,7 @@ class DriverController extends Controller
      */
     public function editProfile(): View
     {
-        $user = auth()->user();
+        $user = Auth::user();
         return view('driver.edit-profile', compact('user'));
     }
 
@@ -151,12 +170,12 @@ class DriverController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . auth()->id(),
+            'email' => 'required|email|unique:users,email,' . Auth::id(),
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:255',
         ]);
 
-        $user = auth()->user();
+        $user = Auth::user();
         $user->update($validated);
 
         return redirect()->route('driver.profile.edit')->with('success', 'Profile updated successfully!');
@@ -180,7 +199,7 @@ class DriverController extends Controller
             'new_password' => 'required|min:8|confirmed',
         ]);
 
-        $user = auth()->user();
+        $user = Auth::user();
 
         // Verify current password
         if (!password_verify($validated['current_password'], $user->password)) {

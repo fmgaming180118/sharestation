@@ -80,4 +80,32 @@ class Station extends Model
     {
         return (float) $this->reviews()->avg('rating') ?? 0;
     }
+
+    /**
+     * Calculate distance between two coordinates using Haversine formula
+     * Returns distance in kilometers
+     */
+    public static function calculateDistance(float $lat1, float $lon1, float $lat2, float $lon2): float
+    {
+        $earthRadius = 6371; // Earth radius in kilometers
+
+        $latDiff = deg2rad($lat2 - $lat1);
+        $lonDiff = deg2rad($lon2 - $lon1);
+
+        $a = sin($latDiff / 2) * sin($latDiff / 2) +
+             cos(deg2rad($lat1)) * cos(deg2rad($lat2)) *
+             sin($lonDiff / 2) * sin($lonDiff / 2);
+
+        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+
+        return $earthRadius * $c;
+    }
+
+    /**
+     * Get distance from a specific location
+     */
+    public function distanceFrom(float $latitude, float $longitude): float
+    {
+        return self::calculateDistance($latitude, $longitude, $this->latitude, $this->longitude);
+    }
 }

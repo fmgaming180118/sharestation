@@ -182,7 +182,12 @@
                             <a href="{{ route('driver.station.show', $station['id']) }}" class="block">
                             <div class="station-card bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-xl p-4 shadow-sm cursor-pointer hover:shadow-md transition">
                                 <div class="flex items-start justify-between mb-2">
-                                    <h4 class="font-bold text-gray-800">{{ $station['name'] }}</h4>
+                                    <div class="flex-1">
+                                        <h4 class="font-bold text-gray-800">{{ $station['name'] }}</h4>
+                                        @if(isset($station['distance']))
+                                        <span class="text-xs text-blue-600 font-medium">{{ number_format($station['distance'], 1) }} km</span>
+                                        @endif
+                                    </div>
                                     <span class="w-3 h-3 bg-{{ $station['status_color'] }}-500 rounded-full"></span>
                                 </div>
                                 <p class="text-xs text-gray-500 mb-2 flex items-center gap-1">
@@ -445,12 +450,20 @@
         }
         
         // Get user's current location using Geolocation API
-        if (navigator.geolocation) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const hasLocationParams = urlParams.has('lat') && urlParams.has('lon');
+        
+        if (navigator.geolocation && !hasLocationParams) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
-                    updateUserLocation(lat, lng);
+                    
+                    // Reload page with location parameters to sort stations by distance
+                    const url = new URL(window.location.href);
+                    url.searchParams.set('lat', lat);
+                    url.searchParams.set('lon', lng);
+                    window.location.href = url.toString();
                 },
                 (error) => {
                     console.log('Geolocation error:', error);
@@ -459,6 +472,11 @@
                     document.getElementById('currentLocationText').textContent = 'Jakarta Pusat (Default)';
                 }
             );
+        } else if (hasLocationParams) {
+            // Use location from URL parameters
+            const lat = parseFloat(urlParams.get('lat'));
+            const lng = parseFloat(urlParams.get('lon'));
+            updateUserLocation(lat, lng);
         } else {
             // Geolocation not supported
             updateUserLocation(userLocation.lat, userLocation.lng);
